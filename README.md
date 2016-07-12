@@ -1,15 +1,17 @@
-# Hello world. (\# for titel)
-## Hello wonderful day. (\#\# for sub-titel)
-* Enjoy every moment. (\* for key poing)
+# Hello world.
+## Hello wonderful day.
+### Enjoy every moment. 
+sunny:
+umbrella:
+cloud:
+snowflake:
+snowman:
 ========================================
-(\=\= for grey line)
-| First Header  | Second Header |
-
-| ------------- | ------------- |
-
-| Content Cell  | Content Cell  |
-
-| Content Cell  | Content Cell  |
+(\=\= for grey line)\n
+---
+layout: post
+title: Blogging Like a Boss
+---
 
 *_________  _________
 
