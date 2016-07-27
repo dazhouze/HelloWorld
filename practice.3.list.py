@@ -47,4 +47,3 @@ print classMates
 print '\ntuple is a unchangeble list once initialized. But notice one item tuple should be (1,) with comma'
 classTuple = ('12a', '13b', '14c')
 print classTuple
-
