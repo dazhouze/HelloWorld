@@ -57,3 +57,8 @@ def YHtri(line):
 
 for n in YHtri(10):
     print n
+
+print 'Iterable'
+from collections import Iterable
+print isinstance([], Iterable)
+
