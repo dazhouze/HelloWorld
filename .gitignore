@@ -9,3 +9,7 @@ build
 # mine
 */
 *.txt
+
+#pic
+*jpg
+
