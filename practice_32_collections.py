@@ -20,8 +20,14 @@ dd['key3'] = dd['key3'] + 1
 print (dd['key2'])
 print (dd['key3'])
 
-from collections import OrderedDict
+from collections import OrderedDict # order of append/instert
 d = dict([('a', 1), ('b', 2), ('c', 3)])
 print(d)
 od = OrderedDict(d)
 print (od)
+
+from collections import Counter
+c = Counter()
+for ch in 'programming':
+    c[ch] = c[ch] + 1
+print (c)
