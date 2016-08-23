@@ -10,5 +10,7 @@ build
 *.txt
 
 #pic
-*jpg
+*.jpg
 
+#database
+*.db
