@@ -1,6 +1,6 @@
 #text file and dirctory
 *.txt
-*/
+*__/
 
 #SAM/BAM file
 *.sam
