@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-class CircularQueue:
+class CircularQueue(object):
     '''Queue implementation using a circular linked list for storage'''
 
     ##### nested __Node class #####
-    class __Node:
+    class __Node(object):
         '''Ligthweight, nonpublic class for stroing a single linked noed'''
         __slots__ = '__element', '__next' #streamline memeory usage
         
