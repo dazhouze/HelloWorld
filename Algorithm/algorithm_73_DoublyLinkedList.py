@@ -26,7 +26,7 @@ class __DoublyLinkedBase(object):
             self.__prev = p
 
         def setNext(self, n):
-            self.__prev = n
+            self.__next = n
 
         def setElement(self, e):
             self.__element = e
