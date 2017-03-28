@@ -3,12 +3,10 @@
 
 __author__ = 'Zhou Ze'
 __version__ = '0.0.1'
-'''
-Tuple based stack class.
-'''
 
-class error(Exception):
-    pass
+'''
+Tuple based stack class 2 items.
+'''
 
 class Stack (object):
     '''matched base stack. Tuple based implementation'''
