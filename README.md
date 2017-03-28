@@ -1,16 +1,9 @@
-# Hello world.
-## Hello beautiful world.
-### Hello wonderful day.
-#### Hello peaceful night. 
+Programming learning implimentation.
 
-========================================
+## Python
+Refere to [Python teaching website](http://www.liaoxuefeng.com/wiki).
 
-| :sunny:       | :seedling:    |
-| ------------- | ------------- |
-| :snowflake:   | :snowman:     |
-| :cloud:       | :umbrella:    |
-========================================
-```Perl
-* Author:
-```
+## Algorithm
+Refere to book [Data Structure and Algorithm in Python](http://multimedia.ucc.ie/Public/training/cycle1/algorithms-in-python.pdf).
 
+## C
