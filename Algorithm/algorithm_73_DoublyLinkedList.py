@@ -35,9 +35,9 @@ class __DoublyLinkedBase(object):
     def __init__(self):
         '''Creat an empty list'''
         self.__header = self.__Node(None, None, None)
-        self.__tailer = self.__Node(None, None, None)
-        self.__heaer.setNext(self.__tailer)
-        self.__tailer.setPrev(self.__header)
+        self.__trailer = self.__Node(None, None, None)
+        self.__header.setNext(self.__trailer)
+        self.__trailer.setPrev(self.__header)
         self.__size = 0
 
     def __len__(self):
