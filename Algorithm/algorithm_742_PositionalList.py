@@ -188,7 +188,7 @@ class PositionalList(object):
     def add_before(self, p, e):
         '''Insert element e into list after Positon p and return new Postion.'''
         original = self.__validate(p)
-        return self.__insert_between(e, original, original.getNext())
+        return self.__insert_between(e, original.getPrev(), original)
 
     def add_after(self, p, e):
         '''Insert element e into list after Position pand return new Position.'''
@@ -197,7 +197,7 @@ class PositionalList(object):
 
     def delete(self, p):
         '''Remove and return the elemet at Position p.'''
-        orginal = self.__validate(p)
+        original = self.__validate(p)
         return self.__delete_node(original)
 
     def replace(self, p, e):
