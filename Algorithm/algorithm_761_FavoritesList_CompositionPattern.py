@@ -210,37 +210,78 @@ class PositionalList(object):
         original.setElement(e)
         return old_value
 
-'''
-Insertion sort only for PositionalList class in nondecrsing order.
-'''
+class FavoritesList(object):
+    '''List of elementsordered from most frequently accessed to least.'''
+    ##### nested __Item class #####
+    class __Item(object):
+        __slots__ = '__value', '__count'
+        def __init__(self,e):
+        self.__value = e
+        self.__count = 0
 
-def insertion_sort(L):
-    '''Sort PositionalList of comparable elements into nondecrasing order'''
-    if len(L)>1:
-        marker = L.first()
-    while marker != L.last():
-        pivot = L.after(marker)
-        value = pivot.element()
-        if value > marker.element():
-            marker = pivot # L.after(marker)
-        else: # pivot's value <= marker's value
-            walk = marker
-            while walk != L.first() and L.before(walk).element() > value:
-                walk = L.before(walk)
-            L.delete(pivot)
-            L.add_before(walk, value)
+    ##### nonpublic utilities of class FavoritesList #####
+    def __find_position(self, e):
+        '''Search for element e and return its Position (or None if not found).'''
+        walk = self.__data.first()
+        while walk is not None and walk.element().__value != e:
+            walk = self.__data.after(walk)
+        return walk
+
+    def __move_up(self, p):
+        '''Move item at Postion p earlier in the list based on access count.'''
+        if p != self.__data.first():
+            cnt = p.element().__count
+            wlak = self.__data.before(p)
+            if cnt > walk.element().__count:
+                while walk!=self.__data.first() and cnt>self.__data.before(walk).element().__count:
+                    walk = self.__dat.before(walk)
+                self.__data.add_before(walk, self.__data.delete(p))
+
+    ##### public utilities of class FavoritesList #####
+    def __init__(self):
+        '''Create an empty list of favorites.'''
+        self.__data = PositionalList() #
+    
+    def __len__(self):
+        '''Return number of entries on favorites list.'''
+        return len(self.__data)
+
+    def is_empth(self):
+        '''Retrun True if the list is empty.'''
+        return len(self.__data)==0
+
+    def access(self, e);
+        '''Access element e, thereby increasing its access count.'''
+        p = self.__find_postion(e) # try to locate existing element
+        if p is None:
+            p = self.__data.add_last(self.__Item(e))
+        p.element().__count += 1
+        self.__move_up(p)
+
+    def remove(self, e):
+        '''Remove element e frome the list of favorites.'''
+        p = self.__find_position(e)
+        if p is not None:
+            self,__data.delete(p)
+
+    def top(self, k):
+        '''Generate sequence of topk elements in terms of access count.'''
+        it
+
+
 
 if __name__ == '__main__':
     PL = PositionalList()
-    p = PL.add_first(0)
-    for x in range(10,0,-1):
+    p1 = PL.add_first('H')
+    p2 = PL.add_after(p1, 'E')
+    p5 = PL.add_last('O')
+    p4 = PL.add_before(p5, 'L')
+    p3 = PL.add_before(p4, 'L')
+    p = PL.last()
+    for x in ' WORLD':
         p = PL.add_after(p, x)
     print('length of PositionalList:%d'%len(PL))
-    for x in PL:
-        print(x, end = ' ')
-    print('')
-    insertion_sort(PL)
-    print('After sort.')
+    print(PL.first().getNode().getElement())
     for x in PL:
         print(x, end = ' ')
     print('')
