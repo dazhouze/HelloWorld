@@ -283,7 +283,7 @@ class FavoritesListMTF(object):
         '''Remove element e frome the list of favorites.'''
         p = self.__find_position(e)
         if p is not None:
-            self,__data.delete(p)
+            self.__data.delete(p)
 
     def top(self, k):
         '''Generate sequence of topk elements in terms of access count.'''
