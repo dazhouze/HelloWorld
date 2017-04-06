@@ -2,10 +2,13 @@
 # -*- coding: utf-8 -*-
 
 '''
-A Tree Abstract Base Class.
+A binary tree is an ordered tree with the following properties:
+1. Every node has at most two children.
+2. Each child node is labeled as being either a left child or a right child.
+3. A left child precedes a right child in the order of children of a node.
 '''
-class Tree(object):
-    '''Abstract base class representing a tree structure.'''
+class BinaryTree(object):
+    '''Abstract base class representing a binary tree structure.'''
     class Position(object):
         '''An abstrction representing the location of a single elemenet.'''
         def element(self):
@@ -54,21 +57,43 @@ class Tree(object):
 
     def depth(self, p):
         '''Return the number of levels separation Position p from the root.'''
-        if not is_root(p):
-            return self.depth(self.parent(p)) + 1
-        return 0
-
-    def height(self, p=None):
-        '''Return the heigth of p.
-        If p is a leaf, then the height of p is 0.
-        Otherwise, the height of p is one more than the maximum of the heights of p’s children.
-        If p is None return the height of entire tree.
-        '''
         if p is None:
             p = self.root()
         if self.is_leaf(p):
             return 0
         return 1 + max(self.heigt(c) for c in self.children(p))
+
+    def left(self, p):
+        '''
+        Return a Position representing p's left child.
+        Return None if p does not have a left child.
+        '''
+        raise NotImplementedError('must be implemented by subclass!')
+
+    def right(self, p):
+        '''
+        Return a Position representing p's right clild.
+        Return None if p does not have a rigth chile.
+        '''
+        raise NotImplementedError('must be implemented by subclass!')
+
+    def sibling(self, p):
+        '''Retrun a Postion representing p's sibling (or None if no sibling).'''
+        parent = self.parent(p)
+        if parent is None:
+            return None
+        else:
+            if p == self.left(parent):
+                return sefl.rigth(parent)
+            else:
+                return self.left(parent)
+    
+    def children(self, p):
+        '''Generate an iteration of Postions represnting p's children.'''
+        if self.left(p) is not None:
+            yield self.left(p)
+        if self.rigth(p) is not None:
+            yield self.right(p)
 
 if __name__ == '__main__':
     pass
