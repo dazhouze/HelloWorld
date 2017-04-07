@@ -41,7 +41,7 @@ class Tree(object):
         raise NotImplementedError('must be implemented by subclass!')
 
     def is_root(self, p):
-        '''Return True if Postion p represents the root of the tree.'''
+        '''Return True if Position p represents the root of the tree.'''
         return self.root() == p
 
     def is_leaf(self, p):

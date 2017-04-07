@@ -44,7 +44,7 @@ class BinaryTree(object):
         raise NotImplementedError('must be implemented by subclass!')
 
     def is_root(self, p):
-        '''Return True if Postion p represents the root of the tree.'''
+        '''Return True if Position p represents the root of the tree.'''
         return self.root() == p
 
     def is_leaf(self, p):
@@ -73,27 +73,38 @@ class BinaryTree(object):
     def right(self, p):
         '''
         Return a Position representing p's right clild.
-        Return None if p does not have a rigth chile.
+        Return None if p does not have a right chile.
         '''
         raise NotImplementedError('must be implemented by subclass!')
 
     def sibling(self, p):
-        '''Retrun a Postion representing p's sibling (or None if no sibling).'''
+        '''Retrun a Position representing p's sibling (or None if no sibling).'''
         parent = self.parent(p)
         if parent is None:
             return None
         else:
             if p == self.left(parent):
-                return sefl.rigth(parent)
+                return sefl.right(parent)
             else:
                 return self.left(parent)
     
     def children(self, p):
-        '''Generate an iteration of Postions represnting p's children.'''
+        '''Generate an iteration of Positions represnting p's children.'''
         if self.left(p) is not None:
             yield self.left(p)
-        if self.rigth(p) is not None:
+        if self.right(p) is not None:
             yield self.right(p)
+
+    def height(self, p=None):
+        '''
+        Return the height of the subtree rooted at Position p.
+        If p is None return the height of entire tree.
+        '''
+        if p is None:
+            p = self.root()
+        if self.is_leaf(p):
+            return 0
+        return 1 + max(self. height2(c) for c in self.children(p))
 
 if __name__ == '__main__':
     pass
