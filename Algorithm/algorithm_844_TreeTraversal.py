@@ -253,13 +253,72 @@ class LinkedBinaryTree(object):
             return 0
         return 1 + max(self. height2(c) for c in self.children(p))
 
+    def __iter__(self):
+        '''Generate an iteration of the tree's elements.'''
+        for p in self.positions():
+            yield p.element()
+
+    def preorder(self):
+        '''Generate a preorder iteration of positions in the tree.'''
+        if not self.is_empty():
+            for p in self.__subtree_preorder(self.root()):
+                yield p
+
+    def __subtree_preorder(self, p):
+        '''Generate a preorder iteration of positions in subtree rooted at p.'''
+        yield p
+        for c in self.children(p):
+            for other in self.__subtree_preorder(c):
+                yield other
+
+    def postorder(self):
+        '''Generate a postorder iteration of positions in the tree.'''
+        if not self.is_empty():
+            for p in self.__subtree_postorder(self.root()):
+                yield p
+
+    def __subtree_postorder(self, p):
+        '''Generate a posterder iteration of positions in subtree rooted at p.'''
+        for c in self.children(p):
+            for other in self.__subtree_postorder(c):
+                yield other
+        yield p
+
+    def breadthfirst(self):
+        '''Generate a breadth-fist iteration of the position of the tree.'''
+        if not self.is_empty():
+            fringe = LinkedQueue()
+            fringe.enqueue(self.root())
+            while not fringe.is_empty():
+                p = fringe.dequeue()
+                yield p
+                for c in self.children(p):
+                    fringe.enqueue(c)
+
+    def inorder(self):
+        '''Generate an inorder iteration of position in the tree.'''
+        if not self.is_empty():
+            for p in self.__subtree_inorder(self.root()):
+                yield p
+
+    def __subtree_inorder(self, p):
+        '''Generate an inorder iteration of positions in subtree rooted at p.'''
+        if self.left(p) is not None:
+            for other in self.__subtree_inorder(self.left(p)):
+                yield other
+        yield p
+        if self.right(p) is not None:
+            for other in self.__subtree_inorder(self.right(p)):
+                yield other
+
     def test(self):
-        pr = self.__add_root('/')
+        pr = self.__add_root(0)
         print(type(pr), pr==self.root())
         print(self.left(pr))
-        self.__add_left(pr,'Document')
+        self.__add_left(pr,-1)
+        self.__add_right(pr,1)
         print(self.left(pr).element())
-        
+        print(self.right(pr).element())
 
 if __name__ == '__main__':
     lbt = LinkedBinaryTree()
