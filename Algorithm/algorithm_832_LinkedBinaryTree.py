@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
 class LinkedBinaryTree(object):
     '''Linked representeation of a binary tree structure.'''
     class __Node(object):
         __slots__ = '__element', '__parent', '__left', '__right'
+
         def __init__(self, element, parent=None, left=None, right=None):
             self.__element = element
             self.__parent = parent
@@ -39,7 +41,7 @@ class LinkedBinaryTree(object):
         '''An abstrction representing the location of a single elemenet.'''
         def __init__(self, container, node):
             '''Construtor should not be invoked by user.'''
-            self.__container = container # container is the tree itself. to avoid other tree's position instance
+            self.__container = container  # container is the tree itself. to avoid other tree's position instance
             self.__node = node
 
         def element(self):
@@ -73,8 +75,8 @@ class LinkedBinaryTree(object):
 
     def __make_position(self, node):
         '''Return Position instance for given node (or None if no node).'''
-        if node is not None: 
-            return self.Position(self, node) 
+        if node is not None:
+            return self.Position(self, node)
         else:
             return None
 
@@ -223,7 +225,6 @@ class LinkedBinaryTree(object):
             return 0
         return 1 + max(self.heigt(c) for c in self.children(p))
 
-
     def sibling(self, p):
         '''Retrun a Position representing p's sibling (or None if no sibling).'''
         parent = self.parent(p)
@@ -234,7 +235,7 @@ class LinkedBinaryTree(object):
                 return self.right(parent)
             else:
                 return self.left(parent)
-    
+
     def children(self, p):
         '''Generate an iteration of Positions represnting p's children.'''
         if self.left(p) is not None:
@@ -255,11 +256,10 @@ class LinkedBinaryTree(object):
 
     def test(self):
         pr = self.__add_root('/')
-        print(type(pr), pr==self.root())
+        print(type(pr), pr == self.root())
         print(self.left(pr))
-        self.__add_left(pr,'Document')
+        self.__add_left(pr, 'Document')
         print(self.left(pr).element())
-        
 
 if __name__ == '__main__':
     lbt = LinkedBinaryTree()
