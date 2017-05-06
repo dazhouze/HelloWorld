@@ -4,8 +4,8 @@
 class LinkedDequeue(object):
     '''A base class providing a doubly linked list representation.'''
 
-    ##### __Node class #####
-    class __Node(object):
+    ##### _Node class #####
+    class _Node(object):
         '''Lightweigth, nonpublic class for storing a double linked node.'''
         __slots__ = '__element', '__prev', '__next'
 
@@ -14,31 +14,31 @@ class LinkedDequeue(object):
             self.__prev = p
             self.__next = n
 
-        def getPrev(self):
+        def get_prev(self):
             return self.__prev
 
-        def getNext(self):
+        def get_next(self):
             return self.__next
 
-        def getElement(self):
+        def get_element(self):
             return self.__element
 
-        def setPrev(self, p):
+        def set_prev(self, p):
             self.__prev = p
 
-        def setNext(self, n):
+        def set_next(self, n):
             self.__next = n
 
-        def setElement(self, e):
+        def set_element(self, e):
             self.__element = e
 
     ##### doubly linked base class and method #####
     def __init__(self):
         '''Creat an empty list'''
-        self.__header = self.__Node(None, None, None)
-        self.__trailer = self.__Node(None, None, None)
-        self.__header.setNext(self.__trailer)
-        self.__trailer.setPrev(self.__header)
+        self.__header = self._Node(None, None, None)
+        self.__trailer = self._Node(None, None, None)
+        self.__header.set_next(self.__trailer)
+        self.__trailer.set_prev(self.__header)
         self.__size = 0
 
     def __len__(self):
@@ -51,44 +51,44 @@ class LinkedDequeue(object):
 
     def __insert_between(self, e, predecessor, successor):
         '''Add element e between two existing nodes and return new node.'''
-        newest = self.__Node(e, predecessor, successor)
-        predecessor.setNext(newest)
-        successor.setPrev(newest)
+        newest = self._Node(e, predecessor, successor)
+        predecessor.set_next(newest)
+        successor.set_prev(newest)
         self.__size += 1
         return newest
 
     def __delete_node(self, node):
         '''Delete nonsentinel node from the list and returen its element.'''
-        predecessor = node.getPrev()
-        successor = node.getNext()
-        predecessor.setNext(successor)
-        successor.setPrev(predecessor)
+        predecessor = node.get_prev()
+        successor = node.get_next()
+        predecessor.set_next(successor)
+        successor.set_prev(predecessor)
         self.__size -= 1
-        element = node.getElement()
-        node.setPrev(None)
-        node.setNext(None)
-        node.setElement(None)
+        element = node.get_element()
+        node.set_prev(None)
+        node.set_next(None)
+        node.set_element(None)
         return element
 
     def first(self):
         '''Return (but do not remove) the element at the front of the deque.'''
         if self.is_empty():
             raise IndexError('Deque is empty')
-        return self.__header.getNext().getElement()
+        return self.__header.get_next().get_element()
 
     def last(self):
         '''Return (but do not remove) the element at the back of the deque.'''
         if self.is_empty():
             raise IndexError('Deque is empty.')
-        return self.__trailer.getPrev().getElement()
+        return self.__trailer.get_prev().get_element()
 
     def insert_first(self, e):
         '''Add an element to the front of the deque.'''
-        self.__insert_between(e, self.__header, self.__header.getNext())
+        self.__insert_between(e, self.__header, self.__header.get_next())
 
     def insert_last(self, e):
         '''Add an element to the back of the deque.'''
-        self.__insert_between(e, self.__trailer.getPrev(), self.__trailer)
+        self.__insert_between(e, self.__trailer.get_prev(), self.__trailer)
 
     def delete_first(self):
         '''
@@ -97,7 +97,7 @@ class LinkedDequeue(object):
         '''
         if self.is_empty():
             raise IndexError('Deque is empty.')
-        return self.__delete_node(self.__header.getNext())
+        return self.__delete_node(self.__header.get_next())
 
     def delete_last(self):
         '''
@@ -106,7 +106,7 @@ class LinkedDequeue(object):
         '''
         if self.is_empty():
             raise IndexError('Deque is empty.')
-        return self.__delete_node(self.__trailer.getPrev())
+        return self.__delete_node(self.__trailer.get_prev())
 
 if __name__ == '__main__':
     LD = LinkedDequeue()
