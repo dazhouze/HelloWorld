@@ -1,46 +1,62 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-'''
-Position class: 
-    __init__(): 
-        __container: a ref to a instance of the Positional list   _      _      _      _ 
-                                                               <-|_|-><-|_|-><-|_|-><-|_|->   
-        __node: a ref to a intance of _Node class    _    
-                                                   <-|_|->  
-    __eq__() __ne__()                      
-    get_element()
-    __make_position()
-    __validate()
 
-_Node class: is the base unit.   
-       _
-    <-|_|->
-         __init__()
-         get_prev()    set_prev()
-         get_next()    set_next()
-         get_element() set_element()
+class UnsortedPriorityQueue(object):
+    ''' A min-oriented priority queue implemented with an un sorted list.'''
+    class _Item(object):
+        '''Lightweight composite to store priority queue items.'''
+        __slots__ = '__key', '__value'
 
-PositionalList class: positional deque.
-       _      _      _      _ 
-    <-|_|-><-|_|-><-|_|-><-|_|->
-    basic func:
-        __init__()
-        __len__()
-        __iter__()
-        is_empty()
-        first()    last()
-        before(p)  after(p)
-    insert + delete func:
-        __insert_between()   __delete_between()
-        add_first()          add_last()
-        add_before()         add_after()
-        delet_()
-        replace()
-'''
+        def __init__(self, k, v):
+            self.__key = k
+            self.__value = v
+
+        def __It__(self, other):
+            return self.__key < other.__key
+
+    def __find_min(self):
+        '''Return Position of item with minimum key.'''
+        if self.is_empty():
+            raise Empty('Priority queue is empty')
+        small = self.__data.first()
+        walk = self.__data.after(small)
+        while walk is not None:
+            if walk.element() < small.element():
+                small = walk
+            walk = self.__data.after(walk)
+    return small
+
+    def __init__(self):
+        '''Creat a new empty Priority Queue.'''
+        self.__data = PositionalList()
+
+    def __len__(self):
+        '''Return the number of items in the priority queue.'''
+        return len(self.__data)
+
+    def is_empyth(self):
+        '''Return True if the priority queue is empyt'''
+        return len(self.__data) == 0
+
+    def add(self, key, value):
+        '''Add a key-value pair.'''
+        self.__data.add_last(self._Item(key, value))
+
+    def min(self):
+        '''Return but do not remeve (k, v) tuple with minimum key.'''
+        p = self.__find_min()
+        item = p.element()
+        return (item.__key, item.__value)
+
+    def remove_min(self):
+        '''Remove and return (k, v) tuple with minmum key.'''
+        p = self.__find_min()
+        item = self.__data.delete(p)
+        return (item.__key, item.__value)
+
 class PositionalList(object):
     '''A sequential container of elements allowing positional access.'''
 
-    ##### Position class#####
     class Position(object):
         '''An abstraction representing the location of a single element.'''
         def __init__(self, container, node):
@@ -66,7 +82,6 @@ class PositionalList(object):
             '''Retrun True if other does not represent the same loaction.'''
             return not (self == other)
 
-    ##### utility method #####
     def __validate(self, p):
         '''Return position's node, or raise approprate error if invalid.'''
         if not isinstance(p, self.Position):
@@ -83,7 +98,6 @@ class PositionalList(object):
             return None
         return self.Position(self, node)
 
-    ##### _Node class #####
     class _Node(object):
         '''Lightweigth, nonpublic class for storing a double linked node.'''
         __slots__ = '__element', '__prev', '__next'
@@ -111,7 +125,6 @@ class PositionalList(object):
         def set_element(self, e):
             self.__element = e
 
-    ##### Positional list class #####
     def __init__(self):
         '''Creat an empty list'''
         self.__header = self._Node(None, None, None)
@@ -128,7 +141,6 @@ class PositionalList(object):
         '''Return True if the list is empty.'''
         return self.__size == 0
 
-    ##### accessors #####
     def first(self):
         '''Return the first Position in the list (or None if list is empty).'''
         return self.__make_position(self.__header.get_next())
@@ -210,17 +222,4 @@ class PositionalList(object):
         return old_value
 
 if __name__ == '__main__':
-    PL = PositionalList()
-    p1 = PL.add_first('H')
-    p2 = PL.add_after(p1, 'E')
-    p5 = PL.add_last('O')
-    p4 = PL.add_before(p5, 'L')
-    p3 = PL.add_before(p4, 'L')
-    p = PL.last()
-    for x in ' WORLD':
-        p = PL.add_after(p, x)
-    print('length of PositionalList:%d'%len(PL))
-    print(PL.first().get_node().get_element())
-    for x in PL:
-        print(x, end = ' ')
-    print('')
+    pass
