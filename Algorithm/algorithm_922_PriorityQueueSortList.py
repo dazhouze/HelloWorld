@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-class UnsortedPriorityQueue(object):
+class SortedPriorityQueue(object):
     ''' A min-oriented priority queue implemented with an un sorted list.'''
+
     class _Item(object):
         '''Lightweight composite to store priority queue items.'''
         __slots__ = '__key', '__value'
@@ -23,18 +24,6 @@ class UnsortedPriorityQueue(object):
             '''Return value of _Item'''
             return self.__value
 
-    def __find_min(self):
-        '''Return Position of item with minimum key.'''
-        if self.is_empty():
-            raise Empty('Priority queue is empty')
-        small = self.__data.first()
-        walk = self.__data.after(small)
-        while walk is not None:
-            if walk.get_element() < small.get_element():
-                small = walk
-            walk = self.__data.after(walk)
-        return small
-
     def __init__(self):
         '''Creat a new empty Priority Queue.'''
         self.__data = PositionalList()
@@ -49,19 +38,29 @@ class UnsortedPriorityQueue(object):
 
     def add(self, key, value):
         '''Add a key-value pair.'''
-        self.__data.add_last(self._Item(key, value))
+        newest = self._Item(key, value)
+        walk = self.__data.last()
+        while walk is not None and newest < walk.get_element():
+            walk = self.__data.before(walk)
+        if walk is None:
+            self.__data.add_first(newest)
+        else:
+            self.__data.add_after(walk, newest)
 
     def min(self):
         '''Return but do not remeve (k, v) tuple with minimum key.'''
-        p = self.__find_min()
-        item = p.get_element()
-        return (item.get_key(), item.get_value())
+        if self.is_empty is not None:
+            p = self.__data.first()
+            item = p.get_element()
+            return (item.get_key(), item.get_value())
+        raise Empty('Priority queue is empty.')
 
     def remove_min(self):
         '''Remove and return (k, v) tuple with minmum key.'''
-        p = self.__find_min()
-        item = self.__data.delete(p)
-        return (item.get_key(), item.get_value())
+        if self.is_empty is not None:
+            item = self.__data.delete(self.__data.first())
+            return (item.get_key(), item.get_value())
+        raise Empty('Priority queue is empty.')
 
 class PositionalList(object):
     '''A sequential container of elements allowing positional access.'''
@@ -231,11 +230,11 @@ class PositionalList(object):
         return old_value
 
 if __name__ == '__main__':
-    USL = UnsortedPriorityQueue()
-    USL.add(1, 11)
-    USL.add(3, 13)
-    USL.add(5, 15)
-    USL.add(1, 12)
-    print(USL.min())
-    print(USL.remove_min())
-    print(USL.min())
+    SL = SortedPriorityQueue()
+    SL.add(1, 11)
+    SL.add(3, 13)
+    SL.add(5, 15)
+    SL.add(1, 12)
+    print(SL.min())
+    print(SL.remove_min())
+    print(SL.min())
