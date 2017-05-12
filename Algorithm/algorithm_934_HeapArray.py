@@ -23,7 +23,7 @@ class HeapProrityQueue(object):
             '''Return value of _Item'''
             return self.__value
 
-        def __init__(self):
+    def __init__(self):
         '''Creat a new empty Priority Queue.'''
         self.__data = []
 
@@ -72,7 +72,7 @@ class HeapProrityQueue(object):
                     small_child = right
             if self.__data[small_child] < self.__data[j]:
                 self.__swap(j, small_child)
-                self.__downheep(small_child)
+                self.__downheap(small_child)
 
     def add(self, key, value):
         '''Add a key-value pair to the priority queue.'''
@@ -83,15 +83,29 @@ class HeapProrityQueue(object):
         '''Return but do not remove (k, v) tuple with minimum key.
         Raise Empth exception if empty.
         '''
-        if self.is_empty:
-            raise Empty('Priority queue is empty.')
-            se
+        if self.is_empty():
+            raise ValueError('Priority queue is empty.')
+        item = self.__data[0]
+        return (item.get_key(), item.get_value())
+
+    def remove_min(self):
+        '''Remove and return (k, v) tuple with minimum key.
+        Raise ValueError exceptio if empty.
+        '''
+        if self.is_empty():
+            raise ValueError('Priority queue is empty.')
+        self.__swap(0, len(self.__data) - 1)
+        item = self.__data.pop()
+        self.__downheap(0)
+        return (item.get_key(), item.get_value())
+
 if __name__ == '__main__':
     HPQ = HeapProrityQueue()
     HPQ.add(1, 11)
     HPQ.add(3, 13)
     HPQ.add(5, 15)
     HPQ.add(1, 12)
+    print(len(HPQ))
     print(HPQ.min())
     print(HPQ.remove_min())
     print(HPQ.min())
