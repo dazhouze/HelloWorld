@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-class HeapProrityQueue(object):
+class HeapPriorityQueue(object):
     ''' A min-oriented priority queue implemented with a binary heap.'''
     class _Item(object):
         '''Lightweight composite to store priority queue items.'''
@@ -100,7 +100,7 @@ class HeapProrityQueue(object):
         return (item.get_key(), item.get_value())
 
 if __name__ == '__main__':
-    HPQ = HeapProrityQueue()
+    HPQ = HeapPriorityQueue()
     HPQ.add(1, 11)
     HPQ.add(3, 13)
     HPQ.add(5, 15)
