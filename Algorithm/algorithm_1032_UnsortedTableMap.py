@@ -1,15 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-class UnsortedTableMap(object):
-    '''Our own abstract base class that includes a nonpublic _Item class.'''
-    class _Item:
+class MapBase(object):
+    '''Our own abstract base class that includes a nonpupblic _Item class.'''
+    class _Item(object):
         '''Lightweight composite to store key-value pairs as map items.'''
         __slots__ = '__key', '__value'
 
-        def __init__(self, k, v):
+        def __init__(self, k, v);
             self.__key = k
             self.__value = v
+
+        def __eq__(self, other):
+            return self.__key == other.__key
+
+        def __ne__(self, other):
+            return not (self==other)
+
+        def __It__(self, other):
+            return self.__key < other.__key
 
         def get_key(self):
             return self.__key
@@ -17,15 +26,14 @@ class UnsortedTableMap(object):
         def get_value(self):
             return self.__value
 
-        def __eq__(self, other):
-            return self.get_key() == other.get_key()
+        def set_key(self, k):
+            self.__key = k
 
-        def __ne__(self, other):
-            return not (self == other)
+        def set_value(self, v):
+            self.__value = v
 
-        def __It__(self, other):
-            return self.get_key() < other.get_key()
-
+class UnsortedTableMap(MapBase):
+    '''Our own abstract base class that includes a nonpublic _Item class.'''
     def __init__(self):
         '''Create an empty map.'''
         self.__table = []
@@ -93,13 +101,3 @@ class UnsortedTableMap(object):
         p = self.__find_min()
         item = self.__data.delete(p)
         return (item.get_key(), item.get_value())
-
-if __name__ == '__main__':
-    UTM = UnsortedTableMap()
-    UTM.add(1, 11)
-    UTM.add(3, 13)
-    UTM.add(5, 15)
-    UTM.add(1, 12)
-    print(UTM.min())
-    print(UTM.remove_min())
-    print(UTM.min())
