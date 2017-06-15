@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 class LinkedBinaryTree(object):
     '''Linked representeation of a binary tree structure.'''
     class _Node(object):
@@ -28,7 +27,7 @@ class LinkedBinaryTree(object):
         def set_element(self, element):
             self.__element = element
 
-        def set_paret(self, parent):
+        def set_parent(self, parent):
             self.__parent = parent
 
         def set_left(self, left):
@@ -44,7 +43,7 @@ class LinkedBinaryTree(object):
             self.__container = container  # container is the tree itself. to avoid other tree's position instance
             self.__node = node
 
-        def element(self):
+        def get_element(self):
             '''Return the element stored at this Position.'''
             return self.__node.get_element()
 
@@ -162,7 +161,7 @@ class LinkedBinaryTree(object):
         node.set_element(e)
         return old
 
-    def __delet(self, p):
+    def __delete(self, p):
         '''
         Delete the node at Position p, and replace it with its child, if any.
         Return the element that had been storedat Position p.
@@ -173,7 +172,7 @@ class LinkedBinaryTree(object):
             raise ValueError('p has two children tree.')
         child = node.get_left() if node.get_left() is not None else node.get_right()
         if child is not None:
-            child.set_paret(node.parent)
+            child.set_parent(node.parent)
         if node is self.__root:
             self.__root = child
         else:
@@ -183,7 +182,7 @@ class LinkedBinaryTree(object):
             else:
                 parent.set_right(child)
         self.__size -= 1
-        node.set_paret(node)
+        node.set_parent(node)
         return node.get_element()
 
     def __attach(self, p, t1, t2):
@@ -195,12 +194,12 @@ class LinkedBinaryTree(object):
             raise TypeError('Tree types must match.')
         self.__size += len(t1) + len(t2)
         if not t1.is_empty():
-            t1.__root.set_paret(node)
+            t1.__root.set_parent(node)
             node.set_left(t1.__root)
             t1.__root = None
             t1.__size = 0
         if not t2.is_empty():
-            t2.__root.set_paret(node)
+            t2.__root.set_parent(node)
             node.set_right(t2.__root)
             t2.__root = None
             t2.__size = 0
@@ -468,3 +467,41 @@ class TreeMap(LinkedBinaryTree, MapBase):
                 return
             self.__rebalance_access(p)
         raise KeyError('Key Error: ' + repr(k))
+
+    def __relink(self, parent, child, make_left_child):
+        '''Relink parent node with chile node (we allow child to be None).'''
+        if make_left_child:
+            parent.set_left(child)
+        else:
+            parent.set_right(child)
+        if child is not None:
+            child.set_parent(parent)
+
+    def __rotate(self, p):
+        '''Rotate Position p above its parent.'''
+        x = p.get_node()
+        y = x.get_parent()
+        z = y.get_parent()
+        if z is None:
+            self.__root = x
+            x.set_parent(None)
+        else:
+            self.__relink(z, x, y == z.__left)
+        if x == y.get_left():
+            self.__relink(y, x.get_right(), True)
+            self.__relink(x, y, False)
+        else:
+            self.__relink(y, x.get_left(), False)
+            self.__relink(x, y, True)
+
+    def __restructure(self, x):
+        '''Perform trinode restructure of Position x with parent/grandparent.'''
+        y = self.parent(x)
+        z = self.parent(y)
+        if (x == self.right(y)) == (y == self.right(z)):
+            self.__rotate(y)
+            return y
+        else:
+            self.__rotate(x)
+            self.__rotate(x)
+            return x

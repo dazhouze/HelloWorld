@@ -28,7 +28,7 @@ class LinkedBinaryTree(object):
         def set_element(self, element):
             self.__element = element
 
-        def set_paret(self, parent):
+        def set_parent(self, parent):
             self.__parent = parent
 
         def set_left(self, left):
@@ -44,7 +44,7 @@ class LinkedBinaryTree(object):
             self.__container = container  # container is the tree itself. to avoid other tree's position instance
             self.__node = node
 
-        def element(self):
+        def get_element(self):
             '''Return the element stored at this Position.'''
             return self.__node.get_element()
 
@@ -162,7 +162,7 @@ class LinkedBinaryTree(object):
         node.set_element(e)
         return old
 
-    def __delet(self, p):
+    def __delete(self, p):
         '''
         Delete the node at Position p, and replace it with its child, if any.
         Return the element that had been storedat Postion p.
@@ -173,7 +173,7 @@ class LinkedBinaryTree(object):
             raise ValueError('p has two children tree.')
         child = node.get_left() if node.get_left() is not None else node.get_right()
         if child is not None:
-            child.set_paret(node.parent)
+            child.set_parent(node.parent)
         if node is self.__root:
             self.__root = child
         else:
@@ -183,7 +183,7 @@ class LinkedBinaryTree(object):
             else:
                 parent.set_right(child)
         self.__size -= 1
-        node.set_paret(node)
+        node.set_parent(node)
         return node.get_element()
 
     def __attach(self, p, t1, t2):
@@ -195,12 +195,12 @@ class LinkedBinaryTree(object):
             raise TypeError('Tree types must match.')
         self.__size += len(t1) + len(t2)
         if not t1.is_empty():
-            t1.__root.set_paret(node)
+            t1.__root.set_parent(node)
             node.set_left(t1.__root)
             t1.__root = None
             t1.__size = 0
         if not t2.is_empty():
-            t2.__root.set_paret(node)
+            t2.__root.set_parent(node)
             node.set_right(t2.__root)
             t2.__root = None
             t2.__size = 0
@@ -259,7 +259,7 @@ class LinkedBinaryTree(object):
         print(type(pr), pr == self.root())
         print(self.left(pr))
         self.__add_left(pr, 'Document')
-        print(self.left(pr).element())
+        print(self.left(pr).get_element())
 
 if __name__ == '__main__':
     lbt = LinkedBinaryTree()
