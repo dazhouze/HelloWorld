@@ -29,4 +29,6 @@ def merge_sort(S):
     merge(S1, S2, S)
 
 if __name__ == '__main__':
-    pass
+    S = [1, 5, 3, 4, 2, 35, 17]
+    merge_sort(S)
+    print(S)
