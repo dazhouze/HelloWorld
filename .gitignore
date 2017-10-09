@@ -10,6 +10,7 @@
 #shell bash scipt
 shell.sh
 temp.sh
+*.out
 
 # Python:
 *.py[cod]
