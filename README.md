@@ -4,7 +4,7 @@ Programming learning implimentation.
 Refere to [Python teaching website](http://www.liaoxuefeng.com/wiki).
 
 ## Algorithm
-Refere to book: *Data Structure and Algorithm in Python*
+Refere to book: [*Data Structure and Algorithm in Python*](https://g.co/kgs/J97ZDZ).
 
 ## Machine learning
-Perere to book: *Python Machine Learning*
+Perere to book: [*Python Machine Learning*](https://g.co/kgs/NW9hbN)

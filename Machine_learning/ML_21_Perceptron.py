@@ -14,9 +14,9 @@ class Perceptron(object):
 
     Parameters
     ----------
-    eta: float
+    __eta: float
         Learing rate (between 0.0 and 1.0)
-    n_iter: int
+    __n_iter: int
         Passes over the traing dataset.
 
     Attributes
@@ -90,18 +90,18 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
         plt.scatter(x=X[y==cl, 0], y=X[y==cl, 1], alpha=0.8, c=cmap(idx), marker=markers[idx], label=cl)
 
 if __name__ == '__main__':
+    # prepare data
     df = pd.read_csv('iris.data', header=None)
     y = df.iloc[0:100, 4].values
     y = np.where( y == 'Iris-setosa', -1, 1)  # convert labels into two integer class labels 1, -1
     X = df.iloc[0:100, [0, 2]].values # training vectors
-    # origin data
+    # view data
     fig = plt.figure()
     plt.scatter(X[0:50, 0], X[0:50, 1], color='red', marker = 'o', label = 'setosa')
     plt.scatter(X[50:100, 0], X[50:100, 1], color='blue', marker = 'x', label = 'versicolor')
     plt.xlabel('sepal lenght')
     plt.ylabel('pepal lenght')
     plt.legend(loc='upper left')
-    #plt.show()
     fig.savefig('Iris_ori.pdf')
 
     # perceptron
