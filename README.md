@@ -7,4 +7,4 @@ Refere to [Python teaching website](http://www.liaoxuefeng.com/wiki).
 Refere to book: [*Data Structure and Algorithm in Python*](https://g.co/kgs/J97ZDZ).
 
 ## Machine learning
-Perere to book: [*Python Machine Learning*](https://g.co/kgs/NW9hbN)
+Refere to book: [*Python Machine Learning*](https://g.co/kgs/NW9hbN)
