@@ -7,9 +7,7 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 class Perceptron(object):
-
 	'''Rerceptron classifier.
 
 	Parameters

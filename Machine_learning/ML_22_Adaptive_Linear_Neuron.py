@@ -94,7 +94,6 @@ if __name__ == '__main__':
 
 	ada = AdalineGD(n_iter=15, eta=0.01)
 	ada.fit(X_std, y)
-
 	from matplotlib.backends.backend_pdf import PdfPages
 	with PdfPages('Iris_standard.pdf') as pdf_out:
 		fig = plt.figure()

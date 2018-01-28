@@ -111,7 +111,6 @@ if __name__ == '__main__':
 	plt.legend(loc='best')
 	fig.savefig('sigmoid_cost.pdf')
 	
-	# sigmoid
 	# prepare data
 	from sklearn import datasets
 	iris = datasets.load_iris()
