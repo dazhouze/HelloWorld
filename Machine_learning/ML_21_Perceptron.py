@@ -43,7 +43,7 @@ class Perceptron(object):
 			Target values.
 
 		Returns
-		----------
+		-------
 		self: object
 		'''
 		self.__w = np.zeros(1 + X.shape[1])  # weigth number is features + 1

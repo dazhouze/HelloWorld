@@ -46,7 +46,7 @@ class AdalineSGD(object):
 		y: array-linke, shape = [n_samples]
 			Target values.
 		Returns
-		----------
+		-------
 		self: object
 		'''
 		self.__w = np.zeros(1 + X.shape[1])

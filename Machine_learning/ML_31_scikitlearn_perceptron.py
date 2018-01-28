@@ -25,14 +25,13 @@ def plot_decision_regions(X, y, classifier, test_idx = None, resolution=0.02):
 	plt.ylim(xx2.min(), xx2.max())
 
 	for idx, cl in enumerate(np.unique(y)):
-		print(idx, cl)
 		plt.scatter(x=X[y==cl, 0], y=X[y==cl, 1], alpha=0.8, c=colors[idx], marker=markers[idx], label=cl, edgecolor='black')
 
 	# highlight test samples
 	if test_idx:
 		#plot all samples
 		X_test, y_test = X[test_idx, :], y[test_idx]
-		plt.scatter(X_test[:, 0], X_test[:, 1], c='', edgecolor='black', appha=1.0, linewidth=1, marker='o', s=100, label='test set')
+		plt.scatter(X_test[:,0], X_test[:,1], c='', edgecolor='black', alpha=1.0, linewidth=1, marker='o', s=100, label='test set')
 
 
 if __name__ == '__main__':
@@ -74,7 +73,7 @@ if __name__ == '__main__':
 	y_combined = np.hstack((y_train, y_test))
 	fig = plt.figure()
 	plot_decision_regions(X=X_combined_std, y=y_combined, classifier=ppn, test_idx=range(105,150))
-	plt.xlabell('petal length [standardized')
-	plt.ylabell('petal width [standardized')
-	plt.legend(loc_='upper left')
+	plt.xlabel('petal length [standardized')
+	plt.ylabel('petal width [standardized')
+	plt.legend(loc='upper left')
 	fig.savefig('Iris_31.pdf')
