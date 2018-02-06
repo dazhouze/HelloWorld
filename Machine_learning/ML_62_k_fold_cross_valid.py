@@ -39,4 +39,10 @@ if __name__ == '__main__':
 		score = pipe_lr.score(X_train[test], y_train[test])
 		scores.append(score)
 		print('Fold: %2d, Class dist.: %s, Acc: %.3f' % (k+1, np.bincount(y_train[train]), score))
-	print('\nCV accuracy: %.3f +/- %.3f' % (np.mean(scores), np.std(scores)))
+	print('\nCV accuracy: %.3f +/- %.3f\n' % (np.mean(scores), np.std(scores)))
+
+	# scikit less verbosely stratified k-fold cross-validation
+	from sklearn.model_selection import cross_val_score
+	scores = cross_val_score(estimator=pipe_lr, X=X_train, y=y_train, cv=10, n_jobs=1)
+	print('scikit cross_val_score CV accuuacy scores: %s' % scores)
+	print('scikit cross_val_score CV accuuacy scores: %.3f +/- %.3f' % (np.mean(scores), np.std(scores)))
