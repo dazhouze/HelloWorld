@@ -107,7 +107,7 @@ class MajorityVoteClassifier(BaseEstimator, ClassifierMixin):
 
 	def get_params(self, deep=True):
 		'''Get classifier papameter names for GridSearch.'''
-		if no deep:
+		if not deep:
 			return super(MajorityVoteClassifier, self).get_params(deep=False)
 		else:
 			out = self.named_classifiers.copy()
@@ -128,3 +128,13 @@ if __name__ == '__main__':
 	plt.legend(loc='upper left')
 	plt.grid(alpha=0.5)
 	fig.savefig('ensemble.pdf')
+
+	from sklearn import datasets
+	from sklearn.model_selection import train_test_split
+	from sklearn.preprocessing import StandardScaler
+	from sklearn.preprocessing import LabelEncoder
+	iris = datasets.load_iris()
+	X, y = iris.data[50:, [1,2]], iris.target[50:]
+	le = LabelEncoder()
+	y = le.fit_transform(y)
+
