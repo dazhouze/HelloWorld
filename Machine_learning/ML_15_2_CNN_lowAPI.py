@@ -150,13 +150,12 @@ if __name__ == '__main__':
 	print('Image data type:', img.dtype)
 	print(img[100:102, 100:102, :])
 	
-
 	mnist = np.load('mnist_scaled.npz')
-	X_train, X_test, y_train, y_test = mnist['X_train'], mnist['X_test'], mnist['y_train'], mnist['y_test']
-	X_train=X_train[:45000]
-	y_train=y_train[:45000]
-	X_valid=X_train[45000:]
-	y_valid=y_train[45000:]
+	X_train_tem, X_test, y_train_tem, y_test = mnist['X_train'], mnist['X_test'], mnist['y_train'], mnist['y_test']
+	X_train=X_train_tem[:50000]
+	y_train=y_train_tem[:50000]
+	X_valid=X_train_tem[50000:]
+	y_valid=y_train_tem[50000:]
 	mean_vals = np.mean(X_train, axis=0)
 	std_val = np.std(X_train)
 	X_train_centered = (X_train - mean_vals)/std_val
@@ -206,6 +205,13 @@ if __name__ == '__main__':
 		load(saver, sess, epoch=20, path='./model/')
 		preds = predict(sess, X_test_centered, return_proba=False)
 		print('Test Accuracy: %.3f%%' % (100*np.sum(preds == y_test)/len(y_test)))
+
+	# run the prediction on some test samples
+	np.set_prinoptions(precision=2, suppress=True)
+	with tf.Session(graph=g2) as sess:
+		load(saver, sess, epoch=20, path='./model/')
+		print(predict(sess, X_test_centered[:10], return_proba=False))
+		print(predict(sess, X_test_centered[:10], return_proba=True))
 
 	# continue training for 20 more epochs without reinitializing :: intialize=False
 	with tf.Session(graph=g2) as sess:
