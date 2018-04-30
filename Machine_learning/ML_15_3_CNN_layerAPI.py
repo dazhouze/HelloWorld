@@ -66,7 +66,7 @@ class ConvNN(object):
 
 	def load(self, epoch, path):
 		print('Loading model from %s' % path)
-		self.saver.restrore(self.sess, os.path.join(path, 'model.ckpt-%d' % epoch))
+		self.saver.restore(self.sess, os.path.join(path, 'model.ckpt-%d' % epoch))
 
 	def train(self, training_set, validation_set=None, initialize=True):
 		# initialize variables
@@ -129,7 +129,7 @@ if __name__ == '__main__':
 	cnn2.load(epoch=20, path='./tflayers-model/')
 	print(cnn2.predict(X_test_centered[:10, :]))
 	
-	preds = css.predict(X_test_centered)
+	preds = cnn2.predict(X_test_centered)
 	print('Test Accuracy %.2f%%' % (100*np.sum(y_test == preds)/len(y_test)))
 
 	
