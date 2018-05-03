@@ -132,4 +132,4 @@ if __name__ == '__main__':
 	rnn.train(X_train, y_train, num_epochs=40)
 	preds = rnn.predict(X_test)
 	y_true = y_test[:len(preds)]
-	print('Test Acc.: %.3f' % np.sum(preds == y_true)/len(y_true))
+	print('Test Acc.: %.3f' % (np.sum(preds == y_true)/len(y_true)))
