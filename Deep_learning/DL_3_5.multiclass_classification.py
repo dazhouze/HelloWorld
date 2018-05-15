@@ -11,43 +11,53 @@ import numpy as np
 import tensorflow as tf
 import keras
 
-def vctorize_sequences(sequences, dimension=10000):
+def vectorize_sequences(sequences, dimension=10000):
 	results = np.zeros((len(sequences), dimension))
-	for i,sequence in enumerate(sequences):
+	for i, sequence in enumerate(sequences):
 		results[i, sequence] = 1.
 	return results
 
+def to_one_hot(labels, dimension=46):
+	results = np.zeros((len(labels), dimension))
+	for i, label in enumerate(labels):
+		results[i, label] = 1.
+	return results
+
 if __name__ == '__main__':
-	from keras.datasets import imdb
-	# only keep top 10k most frequently occurring words
-	(train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=10000)
-	word_index = imdb.get_word_index()
+	from keras.datasets import reuters
+	(train_data, train_labels), (test_data, test_labels) = reuters.load_data(num_words=10000)
+	word_index = reuters.get_word_index()
 	reverse_word_index = dict([(value, key) for (key, value) in word_index.items()])
-	decoded_review = ' '.join([reverse_word_index.get(i-3, '?') for i in train_data[0]])
-	#print(decoded_review)
-	print(train_data.shape, test_data.shape)
-	
-	x_train = vctorize_sequences(train_data)
-	x_test = vctorize_sequences(test_data)
-	y_train = np.asarray(train_labels).astype('float32')
-	y_test = np.asarray(test_labels).astype('float32')
-	x_val = x_train[:10000]  # validation set
-	partial_x_train = x_train[10000:]
-	y_val = y_train[:10000]
-	partial_y_train = y_train[10000:]
+	decoded_newswire = ' '.join([reverse_word_index.get(i-3, '?') for i in train_data[0]])
+	print(decoded_newswire)
+
+	x_train = vectorize_sequences(train_data)
+	x_test = vectorize_sequences(test_data)
+	one_hot_train_labels = to_one_hot(train_labels)
+	one_hot_test_labels = to_one_hot(test_labels)
+	from keras.utils.np_utils import to_categorical
+	one_hot_train_labels = to_categorical(train_labels)
+	one_hot_test_labels = to_categorical(test_labels)
 
 	from keras import models
 	from keras import layers
 	model = models.Sequential()
-	model.add(layers.Dense(16, activation='relu', input_shape=(10000,)))
-	model.add(layers.Dense(16, activation='relu'))
-	model.add(layers.Dense(1, activation='sigmoid'))
-	model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['accuracy'])
-	history = model.fit(partial_x_train, partial_y_train, epochs=20, batch_size=512, validation_data=(x_val, y_val))
-	results = model.evaluate(x_test, y_test)
-	print('epochs=20', results)
+	model.add(layers.Dense(64, activation='relu', input_shape=(10000,)))
+	model.add(layers.Dense(64, activation='relu'))
+	model.add(layers.Dense(46, activation='softmax'))
+	model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+	x_val = x_train[:1000]
+	partial_x_train = x_train[1000:]
+	y_val = one_hot_train_labels[:1000]
+	partial_y_train = one_hot_train_labels[1000:]
 
-	with matplotlib.backends.backend_pdf.PdfPages('DL_3_4.pdf') as pdf_all: 
+	history = model.fit(partial_x_train, partial_y_train, epochs=20, batch_size=512, validation_data=(x_val, y_val))
+	model.save('./DL_3_5.h5')
+	results = model.evaluate(x_test, one_hot_test_labels)
+	print(results)
+
+
+	with matplotlib.backends.backend_pdf.PdfPages('DL_3_5.pdf') as pdf_all: 
 		history_dict = history.history
 		print(history_dict.keys())
 		loss_values = history_dict['loss']
@@ -80,14 +90,4 @@ if __name__ == '__main__':
 		plt.tight_layout()
 		pdf_all.savefig(fig)
 
-	model = models.Sequential()
-	model.add(layers.Dense(16, activation='relu', input_shape=(10000,)))
-	model.add(layers.Dense(16, activation='relu'))
-	model.add(layers.Dense(1, activation='sigmoid'))
-	model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['accuracy'])
-	history = model.fit(x_train, y_train, epochs=4, batch_size=512)
-	results = model.evaluate(x_test, y_test)
-	model.save('DL_3_4.h5')
-	print('epochs=4', results)
-	print(model.predict(x_test))  # genreate prdictions on new data
 
