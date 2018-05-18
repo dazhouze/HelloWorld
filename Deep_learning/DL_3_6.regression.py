@@ -6,7 +6,6 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.backends.backend_pdf
 
-import pandas as pd
 import numpy as np
 import tensorflow as tf
 import keras
