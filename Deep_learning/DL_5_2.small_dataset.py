@@ -109,7 +109,7 @@ if __name__ == '__main__':
 		break
 	
 	history = model.fit_generator(train_generator, steps_per_epoch=100, epochs=30, validation_data=validation_generator, validation_steps=50)
-	model.save('cats_and_dogs_mall_1.h5')
+	model.save('cats_and_dogs_small_1.h5')
 	#model = models.load_model('cats_and_dogs_mall_1.h5')
 
 	with matplotlib.backends.backend_pdf.PdfPages('DL_5_4.pdf') as pdf_all: 
@@ -142,7 +142,7 @@ if __name__ == '__main__':
 		pdf_all.savefig(fig)
 
 	datagen = ImageDataGenerator(rotation_range=40, width_shift_range=0.2, height_shift_range=0.2, shear_range=0.2, zoom_range=0.2, horizontal_flip=True, fill_mode='nearest')
-	from keras.preporcessing import image
+	from keras.preprocessing import image
 	fname = [os.path.join(train_cats_dir, fname) for fname in os.listdir(train_cats_dir)]
 	img_path = fnames[3]
 	img = image.load_img(img_path, target_size=(150, 150))
@@ -163,6 +163,6 @@ if __name__ == '__main__':
 	train_generator = train_datagen.flow_from_directory(train_dir, target_size=(150, 150), batch_size=32, class_mode='binary')
 	validation_generator = test_datagen.flow_from_directory(validation_dir, target_size=(150, 150), batch_size=32, class_mode='binary')
 	history = model.fit_generator(train_generator, steps_per_epoch=100, epochs=100, validation_data=validation_generator, validation_steps=50)
-	model.save('cats_and_dogs_mall_2.h5')
+	model.save('cats_and_dogs_small_2.h5')
 	#model = models.load_model('cats_and_dogs_mall_1.h5')
 
