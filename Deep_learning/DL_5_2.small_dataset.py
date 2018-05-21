@@ -36,7 +36,6 @@ if __name__ == '__main__':
 	test_dogs_dir = os.path.join(test_dir, 'dogs')
 	#os.mkdir(test_dogs_dir)
 
-	'''
 	fnames = ['cat.{}.jpg'.format(i) for i in range(1000)]
 	for fname in fnames:
 		src = os.path.join(original_dataset_dir, fname)
@@ -79,7 +78,6 @@ if __name__ == '__main__':
 	print('total validation dog images:', len(os.listdir(validation_dogs_dir)))
 	print('total test cat images:', len(os.listdir(test_cats_dir)))
 	print('total test dog images:', len(os.listdir(test_dogs_dir)))
-	'''
 	from keras import layers
 	from keras import models
 	model = models.Sequential()
@@ -99,6 +97,7 @@ if __name__ == '__main__':
 
 	from keras import optimizers
 	model.compile(loss='binary_crossentropy', optimizer=optimizers.RMSprop(lr=1e-4), metrics=['acc'])
+
 	from keras.preprocessing.image import ImageDataGenerator
 	train_datagen = ImageDataGenerator(rescale=1./255)
 	test_datagen = ImageDataGenerator(rescale=1./255)
@@ -158,6 +157,7 @@ if __name__ == '__main__':
 			break
 	#plt.show()
 
+	from keras.preprocessing.image import ImageDataGenerator
 	train_datagen = ImageDataGenerator(rescale=1./255, rotation_range=40, width_shift_range=0.2, shear_range=0.2, zoom_range=0.2, horizontal_flip=True,)
 	test_datagen = ImageDataGenerator(rescale=1./255)
 	train_generator = train_datagen.flow_from_directory(train_dir, target_size=(150, 150), batch_size=32, class_mode='binary')
@@ -165,3 +165,4 @@ if __name__ == '__main__':
 	history = model.fit_generator(train_generator, steps_per_epoch=100, epochs=100, validation_data=validation_generator, validation_steps=50)
 	model.save('cats_and_dogs_mall_2.h5')
 	#model = models.load_model('cats_and_dogs_mall_1.h5')
+
