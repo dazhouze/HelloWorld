@@ -12,10 +12,15 @@ import tensorflow as tf
 import keras
 
 if __name__ == '__main__':
-	with matplotlib.backends.backend_pdf.PdfPages('DL_5_5.pdf') as pdf_all: 
+	with matplotlib.backends.backend_pdf.PdfPages('DL_5_4_1.pdf') as pdf_all: 
 		from keras.models import load_model
-		#model = load_model('cats_and_dogs_small_2.h5')
-		model = load_model('cats_and_dogs_small_1.h5')
+		model = load_model('cats_and_dogs_small_2.h5')
+
+		from keras.applications import VGG16
+		conv_base = VGG16(weights='imagenet', include_top=False, input_shape=(150, 150, 3))
+		conv_base.summary()
+		model = conv_base
+
 		model.summary()
 		
 		img_path = 'cats_and_dogs_small/test/cats/cat.1700.jpg'
@@ -39,11 +44,11 @@ if __name__ == '__main__':
 		print(first_layer_activation.shape)
 
 		fig = plt.figure()
-		plt.matshow(first_layer_activation[0, :, :, 1], cmap='viridis')
+		plt.matshow(first_layer_activation[0, :, :, 0], cmap='viridis')
 		pdf_all.savefig()
 
 		fig = plt.figure()
-		plt.matshow(first_layer_activation[0, :, :, 7], cmap='viridis')
+		plt.matshow(first_layer_activation[0, :, :, 1], cmap='viridis')
 		pdf_all.savefig()
 
 		layer_names = []
