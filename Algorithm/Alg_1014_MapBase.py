@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-class MapBase(object):
+from collections import MutableMapping
+class MapBase(MutableMapping):
 	'''Our own abstract base class that includes a nonpupblic _Item class.'''
 	class _Item(object):
 		'''Lightweight composite to store key-value pairs as map items.'''
