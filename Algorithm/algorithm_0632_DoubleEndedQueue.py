@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 '''
 ==================
-Our Deque ADT                
+Our Deque ADT	            
 ==================
 len(D)
 D.add first( )
