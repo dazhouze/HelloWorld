@@ -1,8 +1,10 @@
 #text file and dirctory
 *.txt
 *.data
-*.pdf
 *__/
+*.csv
+*.h5
+*.npz
 
 #SAM/BAM file
 *.sam
@@ -22,3 +24,8 @@ temp.sh
 dist
 build
 __*
+
+# pictures
+*.png
+*.jpg
+*.pdf
