@@ -7,19 +7,19 @@ from Alg_1014_MapBase import MapBase
 class TreeMap(LinkedBinaryTree, MapBase):
 	'''Sorted map implementation useing a binary search tree.'''
 	class Position(LinkedBinaryTree.Position):
-		def get_key(self):
+		def key(self):
 			'''Return key of map's key-value pair.'''
 			return self.get_node().get_element().get_key()
 
-		def get_value(self):
+		def value(self):
 			'''Return value of map's key-value pair.'''
 			return self.get_node().get_element().get_value()
 
 	def _subtree_search(self, p, k):
 		'''Return Position of p's subtree having key k, or last node searched.'''
-		if k == p.get_key():
+		if k == p.key():
 			return p
-		elif k < p.get_key():
+		elif k < p.key():
 			if self.left(p) is not None:
 				return self._subtree_search(self.left(p), k)
 		else:
@@ -98,7 +98,7 @@ class TreeMap(LinkedBinaryTree, MapBase):
 			return None
 		else:
 			p = self.first()
-			return (p.get_key(), p.get_value())
+			return (p.key(), p.value())
 
 	def find_max(self):
 		'''Return (key,value) pair with maximum key (or None if empty).'''
@@ -106,7 +106,7 @@ class TreeMap(LinkedBinaryTree, MapBase):
 			return None
 		else:
 			p = self.last()
-			return (p.get_key(), p.get_value())
+			return (p.key(), p.value())
 
 	def find_le(self, k):
 		'''Return (key, value) pair with greatest key less than or equal to k.
@@ -116,10 +116,10 @@ class TreeMap(LinkedBinaryTree, MapBase):
 			return None
 		else:
 			p = self.find_position(k)
-			if p.get_key() < k:
+			if p.key() > k:
 				p = self.before(p)
 			if p is not None:
-				return (p.get_key(), p.get_value())
+				return (p.key(), p.value())
 			else:
 				return None
 
@@ -131,10 +131,10 @@ class TreeMap(LinkedBinaryTree, MapBase):
 			return None
 		else:
 			p = self.find_position(k)
-			if p.get_key() < k:
+			if p.key() < k:
 				p = self.after(p)
 			if p is not None:
-				return (p.get_key(), p.get_value())
+				return (p.key(), p.value())
 			else:
 				return None
 
@@ -148,10 +148,10 @@ class TreeMap(LinkedBinaryTree, MapBase):
 				p = self.first()
 			else:
 				p = self.find_position(start)
-				if p.get_key() < start:
+				if p.key() < start:
 					p = self.after(p)
-			while p is not None and (stop is None or p.get_key() < stop):
-				yield (p.get_key(), p.get_value())
+			while p is not None and (stop is None or p.key() < stop):
+				yield (p.key(), p.value())
 				p = self.after(p)
 
 	def __getitem__(self, k):
@@ -161,9 +161,9 @@ class TreeMap(LinkedBinaryTree, MapBase):
 		else:
 			p = self._subtree_search(self.root(), k)
 			self._rebalance_access(p)
-			if k != p.get_key():
+			if k != p.key():
 				raise KeyError('Key Error: ' + repr(k))
-			return p.get_value()
+			return p.value()
 
 	def __setitem__(self, k, v):
 		'''Assign value v to key k, overwriting existing value if present.'''
@@ -171,13 +171,13 @@ class TreeMap(LinkedBinaryTree, MapBase):
 			leaf = self.add_root(self._Item(k, v))
 		else:
 			p = self._subtree_search(self.root(), k)
-			if p.get_key() == k:
-				p.get_element().set_get_value(v)
+			if p.key() == k:
+				p.get_element().set_value(v)
 				self._rebalance_access(p)
 				return
 			else:
 				item = self._Item(k, v)
-				if p.get_key() < k:
+				if p.key() < k:
 					leaf = self.add_right(p, item)
 				else:
 					leaf = self.add_left(p, item)
@@ -187,7 +187,7 @@ class TreeMap(LinkedBinaryTree, MapBase):
 		'''Generate an iteration of all keys in the map in order.'''
 		p = self.first()
 		while p is not None:
-			yield p.get_key()
+			yield p.key()
 			p = self.after(p)
 
 	def delete(self, p):
@@ -205,7 +205,7 @@ class TreeMap(LinkedBinaryTree, MapBase):
 		'''Remove item associated with key k(raise KeyError If not found).'''
 		if not self.is_empty():
 			p = self._subtree_search(self.root(), k)
-			if k == p.get_key():
+			if k == p.key():
 				self.delete(p)
 				return
 			self._rebalance_access(p)
@@ -266,7 +266,7 @@ if __name__ == '__main__':
 		#tm[x] =  '%d' % x  # map
 		tm.setdefault(x, '%d' % x)  # map
 	print(tm.first() == tm.root())
-	print(tm.last().get_node().get_element().get_key())
+	print(tm.last().key())
 	print('min',tm.find_min())
 	print('max',tm.find_max())
 	print('le',tm.find_le(6))

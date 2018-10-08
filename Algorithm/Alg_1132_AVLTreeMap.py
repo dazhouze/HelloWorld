@@ -72,20 +72,46 @@ class AVLTreeMap(TreeMap):
 	def _rebalance_delete(self, p):
 		self._rebalance(p)
 
+	def find_close(self, k):
+		'''Return (key, value) pair with closest key to k.
+		Return None if there does not exit such a key.
+		'''
+		if self.is_empty():
+			return None
+		else:
+			p = self.find_position(k)
+			if p is None:
+				return None
+			min_dist, min_p = float('Inf'), None
+			for pos in (self.before(p), p, self.after(p),):
+				if pos is None:
+					continue
+				dist = abs(pos.key() - k)
+				if dist < min_dist:
+					min_dist, min_p = dist, pos
+			p = min_p
+			return (p.key(), p.value())
+
 if __name__ == '__main__':
 	avl = AVLTreeMap()
+	'''
 	for x in range(1, 10):
 		print('####',x,)
 		avl.setdefault(x, '%d' % (x))  # map
 		print('depth', avl.depth(), 'num', len(avl))
 		print('left rigth heigth', avl.root().get_node().left_height(), avl.root().get_node().right_height())
+	'''
+	for x in range(16, 31):
+		avl.setdefault(x, '%d' % (x))  # map
 	for k,v in sorted(avl.items()):
 		print(k, v)
+	k = 15
+	close_k, close_y = avl.find_close(k)
+	print('close',close_k)
 	'''
 	print(avl.first() == avl.root())
 	print(avl.last().get_element().get_key())
 	print('min',avl.find_min())
 	print('max',avl.find_max())
 	print('le',avl.find_le(6))
-
 	'''

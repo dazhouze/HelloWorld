@@ -61,7 +61,7 @@ class HashMapBase(MapBase):
 		j = self.__hash_function(k)
 		self,__bucket_setitem(j, k, v)
 		if self.__n > len(self.__table) // 2:
-			self.__resize(2 * len(self.__table - 1)
+			self.__resize(2 * len(self.__table - 1))
 
 	def __delitem__(self, k):
 		j = self.__hash_function(k)
