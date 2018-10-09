@@ -11,8 +11,6 @@ def insert_sort(A):
 	    A[j] = cur #
 	    print(k, A)
 
-
-
 if __name__ == '__main__':
 	Ay = [3,2,4,1,5,9,7,8]
 	insert_sort(Ay)

@@ -75,6 +75,7 @@ class AVLTreeMap(TreeMap):
 	def find_close(self, k):
 		'''Return (key, value) pair with closest key to k.
 		Return None if there does not exit such a key.
+        If left and right distance is equal, it will return left position.(less)
 		'''
 		if self.is_empty():
 			return None
@@ -94,13 +95,11 @@ class AVLTreeMap(TreeMap):
 
 if __name__ == '__main__':
 	avl = AVLTreeMap()
-	'''
-	for x in range(1, 10):
+	for x in range(1, 14+1):
 		print('####',x,)
 		avl.setdefault(x, '%d' % (x))  # map
 		print('depth', avl.depth(), 'num', len(avl))
 		print('left rigth heigth', avl.root().get_node().left_height(), avl.root().get_node().right_height())
-	'''
 	for x in range(16, 31):
 		avl.setdefault(x, '%d' % (x))  # map
 	for k,v in sorted(avl.items()):

@@ -3,67 +3,52 @@
 
 class LinkedStack(object):
 	'''LIFO Stack implementation using a singly linked list for storage'''
-
 	##### nested __Node class #####
 	class __Node(object):
 	    '''Ligthweight, nonpublic class for stroing a single linked noed'''
-	    __slots__ = '__element', '__next' #streamline memeory usage
-	    
+	    __slots__ = '_element', '_next' #streamline memeory usage
 	    def __init__(self, element, nextN):
-	        self.__element = element
-	        self.__next = nextN
+	        self._element = element
+	        self._next = nextN
 
-	    def getElement(self):
-	        return self.__element
-	        
-	    def getNext(self):
-	        return self.__next
-
-	    def setElement(self, e):
-	        self.__element = e
-	    
-	    def setNext(self, n):
-	        self.__next = n
-	    
-	    
 	##### stack methods #####
 	def __init__(self):
 	    '''Creat an empty stack'''
-	    self.__head = None
-	    self.__size = 0
+	    self._head = None
+	    self._size = 0
 
 	def __len__(self):
 	    '''Return the number of elements in the stack'''
-	    return self.__size
+	    return self._size
 
-	def is__empty(self):
+	def is_empty(self):
 	    '''Retrun true if the stack is empty'''
-	    return self.__size == 0
+	    return self._size == 0
 
 	def push(self, e):
 	    '''Add element e to the top of the stack.'''
-	    self.__head = self.__Node(e, self.__head)
-	    self.__size += 1
+	    self._head = self.__Node(e, self._head)
+	    self._size += 1
 
 	def top(self):
 	    '''
 	    Return (but do not remove) the element at the top of the stack.
 	    Raise Empty exception if the stack is empty
 	    '''
-	    if self.is__empty():
+	    if self.is_empty():
 	        raise IndexError('Stack is empty.')
-	    return self.__head.getElement()
+	    return self._head._element
 
 	def pop(self):
 	    '''
 	    Remove and return the element from the top of the stack (i.e. LIFO).
 	    Raise Empty exception if the stack is empty
 	    '''
-	    if self.is__empty():
+	    if self.is_empty():
 	        raise IndexError('Stack is empty.')
-	    answer = self.__head.getElement()
-	    self.__head = self.__head.getNext() # by pass the former tio node
-	    self.__size -= 1
+	    answer = self._head._element
+	    self._head = self._head._next # by pass the former tio node
+	    self._size -= 1
 	    return answer
 
 if __name__ == '__main__':
