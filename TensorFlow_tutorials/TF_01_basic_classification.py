@@ -21,13 +21,15 @@ def basic_classify():
 	(train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 	class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 
 			'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']  # index 0-9
+
 	# explore the data
-	print('train image shape', train_images.shape)
+	print('\ntrain image shape', train_images.shape)
 	print('train labels', train_labels)
 
 	# Preprocess the data
 	print('\ntype of a train image:', type(train_images[0]))
 	print('shape of a train image:', train_images[0].shape)
+
 	# scale these values to a range of 0 to 1
 	train_images = train_images / 255.0
 	test_images = test_images / 255.0
@@ -119,4 +121,3 @@ if __name__ == '__main__':
 	print('TensorFlow version', tf.__version__)
 	print('Keras version', keras.__version__)
 	basic_classify()
-
