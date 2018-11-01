@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from collections import MutableMapping
+
 class MapBase(MutableMapping):
 	'''Our own abstract base class that includes a nonpupblic _Item class.'''
 	class _Item(object):
@@ -18,18 +19,5 @@ class MapBase(MutableMapping):
 		def __ne__(self, other):
 			return not (self==other)
 
-		def __It__(self, other):
+		def __lt__(self, other):
 			return self._key < other._key
-
-		def get_key(self):
-			return self._key
-
-		def get_value(self):
-			return self._value
-
-		def set_key(self, k):
-			self._key = k
-
-		def set_value(self, v):
-			self._value = v
-
