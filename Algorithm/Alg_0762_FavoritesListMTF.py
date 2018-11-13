@@ -29,7 +29,7 @@ class FavoritesListMTF(object):
 	def _find_position(self, e):
 		'''Search for element e and return its Position (or None if not found).'''
 		walk = self._data.first()
-		while walk is not None and walk.get_element()._value != e:
+		while walk is not None and walk.element()._value != e:
 			walk = self._data.after(walk)
 		return walk
 
@@ -56,7 +56,7 @@ class FavoritesListMTF(object):
 		p = self._find_position(e) # try to locate existing element
 		if p is None:
 			p = self._data.add_last(self._Item(e))
-		p.get_element()._count += 1 # count += 1
+		p.element()._count += 1 # count += 1
 		self._move_up(p)
 
 	def remove(self, e):
@@ -78,11 +78,11 @@ class FavoritesListMTF(object):
 			highPos = temp.first() # position container
 			walk = temp.after(highPos)
 			while walk is not None:
-				if walk.get_element()._count > highPos.get_element()._count:
+				if walk.element()._count > highPos.element()._count:
 					highPos = walk
 				walk = temp.after(walk) # next position in PositionalList
 			# the element with highest count
-			yield highPos.get_element()._value
+			yield highPos.element()._value
 			temp.delete(highPos)
 
 if __name__ == '__main__':

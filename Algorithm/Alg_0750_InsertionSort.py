@@ -13,12 +13,12 @@ def insertion_sort(L):
 	    marker = L.first()
 	while marker != L.last():
 	    pivot = L.after(marker)
-	    value = pivot.get_element()
-	    if value > marker.get_element():
+	    value = pivot.element()
+	    if value > marker.element():
 	        marker = pivot # L.after(marker)
 	    else: # pivot's value <= marker's value
 	        walk = marker
-	        while walk != L.first() and L.before(walk).get_element() > value:
+	        while walk != L.first() and L.before(walk).element() > value:
 	            walk = L.before(walk)
 	        L.delete(pivot)
 	        L.add_before(walk, value)

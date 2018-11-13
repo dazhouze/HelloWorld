@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 '''
 Position class: 
 	__init__(): 
@@ -8,7 +9,7 @@ Position class:
 		_node: a ref to a intance of _Node class	_	
 												   <-|_|->  
 	__eq__() __ne__()					  
-	get_element()
+	element()
 	_make_position()
 	_validate()
 
@@ -34,6 +35,7 @@ PositionalList class: positional deque.
 		delet_()
 		replace()
 '''
+
 class PositionalList(object):
 	'''A sequential container of elements allowing positional access.'''
 	##### Position class#####
@@ -44,7 +46,7 @@ class PositionalList(object):
 			self._container = container # instance of PositionList class
 			self._node = node # instance of _Node class
 			
-		def get_element(self):
+		def element(self):
 			'''Return the element stored at this Position.'''
 			return self._node._element
 
