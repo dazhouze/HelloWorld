@@ -33,7 +33,7 @@ class SortedTableMap(MapBase):
 
 	def __getitem__(self, k):
 		'''Return value associated with key k (raise KeyError if not found.).'''
-		j = self._find_index(k, 0, len(self.table) - 1)
+		j = self._find_index(k, 0, len(self._table) - 1)
 		if j == len(self._table) or self._table[j]._key != k:
 			raise KeyError('Key Error: ' + repr(k))
 		return self._table[j]._value
@@ -92,7 +92,7 @@ class SortedTableMap(MapBase):
 	def find_gt(self, k):
 		'''Return (key, value) pair with least key strictly greater than k.'''
 		j = self._find_index(k, 0, len(self._table) - 1)
-		if j < len(self._table) adn self._table[j]._key == k:
+		if j < len(self._table) and self._table[j]._key == k:
 			j += 1
 		if j < len(self._table):
 			return (self._table[j]._key, self._table[j]._value)
@@ -110,7 +110,16 @@ class SortedTableMap(MapBase):
 		while j < len(self._table) and (stop is None or self._table[j]._key < stop):
 			yield (self._table[j]._key, self._table[j]._value)
 			j += 1
-			return (self._table[j-1]._key, self._table[j-1]._value)
 
 if __name__ == '__main__':
-	pass
+	stm = SortedTableMap()
+	for k in range(10):
+		v = 10 + k
+		stm.setdefault(k, v)
+	for k,v in sorted(stm.items()):
+		print(k,v)
+		stm[k] = v-1
+	for k,v in sorted(stm.items()):
+		print(k,v)
+	for k in stm.find_range(3,6):
+		print(k)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from Alg_0936_PriorityQueueBottomUpHeap import HeapPriorityQueue
+from Alg_0934_PriorityQueueHeapArray import HeapPriorityQueue
 class AdaptableHeapPriorityQueue(HeapPriorityQueue):
 	'''A locator-based priority queue implemented with a binary heap.'''
 	class Locator(HeapPriorityQueue._Item):

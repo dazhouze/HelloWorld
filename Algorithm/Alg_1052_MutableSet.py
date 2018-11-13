@@ -1,28 +1,58 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-class MutableSet(object):
+class MultiMap(object):
+	'''A multimap class build upon use of underlying map for storage.'''
+	_MapType = dict
 	
-	def __It__(self, other):
-		'''Return true if this set is a proper subset of other.'''
-		if len(self) >= len(other):
-			return False
-		for e in self:
-			if e not in other:
-				return False
-		return True
+	def __init__(self):
+		'''Creat a new empty multimap instance.'''
+		self._map = self._MapType()
+		self._n = 0
+	
+	def __iter__(self):
+		'''Iterate through all (k,v) pairs in multimap.'''
+		for k,secondary in self._map.items():
+			for v in secondary:
+				yield (k,v)
+	
+	def __len__(self):
+		return self._n
+	
+	def add(self, k, v):
+		'''Add pair (k,v) to multimap.'''
+		container = self._map.setdefault(k, [])
+		container.append(v)
+		self._n += 1
 
-	def __or__(self, other):
-		'''Return a new set that is the union of two existing sets.'''
-		result =  type(self)()
-		for e in self:
-			result.add(e)
-		for e in other:
-			result.add(e)
-		return result
+	def pop(self, k):
+		'''Remove and return arbitrary (k,v) with key k (or raise KeyError).'''
+		secondary = self._map[k]
+		v = secondary.pop()
+		if len(secondary) == 0:
+			del self._map[k]
+		self._n -= 1
+		return (k, v)
 
-	def __ior__(self, other):
-		'''Modify this set to be the union of itself an another set.'''
-		for e in other:
-			self.add(e)
-		return self
+	def find(self, k):
+		''''Return arbitrary (k,v) pair with given key (or raise KeyError).'''
+		secondary = self._map[k]
+		return (k, secondary[0])
+
+	def find_all(self, k):
+		'''Generate iteration of all (k,v) pairs with given key.'''
+		secondary = self._map.get(k, [])
+		for v in secondary:
+			yield (k,v)
+
+if __name__ == '__main__':
+	mm = MultiMap()
+	for k in range(10):
+		v = k+10
+		mm.add(k, v)
+		v = k+20
+		mm.add(k, v)
+	print(mm.pop(0))
+	print(mm.find(1))
+	for x in mm.find_all(1):
+		print('1', x)
