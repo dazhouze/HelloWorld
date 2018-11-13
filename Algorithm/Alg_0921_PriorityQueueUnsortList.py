@@ -30,7 +30,7 @@ class UnsortedPriorityQueue(PriorityQueueBase):
 		small = self._data.first()
 		walk = self._data.after(small)
 		while walk is not None:
-			if walk.get_element() < small.get_element():
+			if walk.element() < small.element():
 				small = walk
 			walk = self._data.after(walk)
 		return small
@@ -50,7 +50,7 @@ class UnsortedPriorityQueue(PriorityQueueBase):
 	def min(self):
 		'''Return but do not remeve (k, v) tuple with minimum key.'''
 		p = self._find_min()
-		item = p.get_element()
+		item = p.element()
 		return (item._key, item._value)
 
 	def remove_min(self):

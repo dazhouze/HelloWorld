@@ -9,11 +9,11 @@ class TreeMap(LinkedBinaryTree, MapBase):
 	class Position(LinkedBinaryTree.Position):
 		def key(self):
 			'''Return key of map's key-value pair.'''
-			return self.get_node().get_element().get_key()
+			return self._node._element._key
 
 		def value(self):
 			'''Return value of map's key-value pair.'''
-			return self.get_node().get_element().get_value()
+			return self._node._element._value
 
 	def _subtree_search(self, p, k):
 		'''Return Position of p's subtree having key k, or last node searched.'''
@@ -172,7 +172,7 @@ class TreeMap(LinkedBinaryTree, MapBase):
 		else:
 			p = self._subtree_search(self.root(), k)
 			if p.key() == k:
-				p.get_element().set_value(v)
+				p._element._value = v
 				self._rebalance_access(p)
 				return
 			else:
@@ -195,7 +195,7 @@ class TreeMap(LinkedBinaryTree, MapBase):
 		self._validate(p)
 		if self.left(p) and self.right(p):
 			replacement = self._subtree_last_position(self.left(p))
-			self._replace(p, replacement.get_element())
+			self._replace(p, replacement._element)
 			p = replacement
 		parent = self.parent(p)
 		self._delete(p)
@@ -225,27 +225,27 @@ class TreeMap(LinkedBinaryTree, MapBase):
 	def _relink(self, parent, child, make_left_child):
 		'''Relink parent node with chile node (we allow child to be None).'''
 		if make_left_child:
-			parent.set_left(child)
+			parent._left = child
 		else:
-			parent.set_right(child)
+			parent._right = child
 		if child is not None:
-			child.set_parent(parent)
+			child._parent = parent
 
 	def _rotate(self, p):
 		'''Rotate Position p above its parent.'''
-		x = p.get_node()
-		y = x.get_parent()
-		z = y.get_parent()
+		x = p._node
+		y = x._parent
+		z = y._parent
 		if z is None:
 			self._root = x
-			x.set_parent(None)
+			x._parent = None
 		else:
-			self._relink(z, x, y == z.get_left())
-		if x == y.get_left():
-			self._relink(y, x.get_right(), True)
+			self._relink(z, x, y == z._left)
+		if x == y._left:
+			self._relink(y, x._right, True)
 			self._relink(x, y, False)
 		else:
-			self._relink(y, x.get_left(), False)
+			self._relink(y, x._left, False)
 			self._relink(x, y, True)
 
 	def _restructure(self, x):

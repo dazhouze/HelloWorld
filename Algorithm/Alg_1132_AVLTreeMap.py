@@ -14,24 +14,14 @@ class AVLTreeMap(TreeMap):
 			self._height = 0
 
 		def left_height(self):
-			if self.get_left() is not None:
-				return self._left._height
-			return 0
+			return self._left._height if self._left is not None else 0
 
 		def right_height(self):
-			if self.get_right() is not None:
-				return self._right._height
-			return 0
+			return self._right._height if self._right is not None else 0
 
-		def get_height(self):
-			return self._height
-	
-		def set_height(self, h):
-			self._height = h
-	
 	def _recompute_height(self, p):
 		node = self._validate(p)
-		node.set_height(1+ max(node.left_height(), node.right_height()))
+		node._height = 1+ max(node.left_height(), node.right_height())
 
 	def _isbalanced(self, p):
 		node = self._validate(p)
@@ -55,13 +45,13 @@ class AVLTreeMap(TreeMap):
 	def _rebalance(self, p):
 		while p is not None:
 			node = self._validate(p)
-			old_height = node.get_height()
+			old_height = node._height
 			if not self._isbalanced(p):
 				p = self._restructure(self._tall_grandchild(p)) 
 				self._recompute_height(self.left(p))
 				self._recompute_height(self.right(p))
 			self._recompute_height(p)
-			if node.get_height() == old_height:
+			if node._height == old_height:
 				p = None
 			else:
 				p = self.parent(p)
@@ -98,8 +88,8 @@ if __name__ == '__main__':
 	for x in range(1, 14+1):
 		print('####',x,)
 		avl.setdefault(x, '%d' % (x))  # map
-		print('depth', avl.depth(), 'num', len(avl))
-		print('left rigth heigth', avl.root().get_node().left_height(), avl.root().get_node().right_height())
+		print('depth', avl.depth(), 'num', len(avl), 'height', avl.height())
+		print('left rigth heigth', avl.root()._node.left_height(), avl.root()._node.right_height())
 	for x in range(16, 31):
 		avl.setdefault(x, '%d' % (x))  # map
 	for k,v in sorted(avl.items()):
@@ -107,10 +97,10 @@ if __name__ == '__main__':
 	k = 15
 	close_k, close_y = avl.find_close(k)
 	print('close',close_k)
-	'''
 	print(avl.first() == avl.root())
-	print(avl.last().get_element().get_key())
+	#print(avl.last().element()._key)
+	print(avl.last()._node._element._key)
+	print(avl.last().key())
 	print('min',avl.find_min())
 	print('max',avl.find_max())
 	print('le',avl.find_le(6))
-	'''
