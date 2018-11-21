@@ -15,7 +15,7 @@ def find_kmp(T, P):
 			j += 1
 			k += 1
 		elif k > 0:
-			k = fail[l-1]
+			k = fail[k-1]
 		else:
 			j += 1
 	return -1
@@ -36,3 +36,9 @@ def compute_kmp_fail(P):
 		else:
 			j += 1
 	return fail
+
+if __name__ == '__main__':
+	T = '012301234012356789'
+	P = '01235'
+	print(T, P)
+	print(find_kmp(T, P))

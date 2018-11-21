@@ -11,3 +11,9 @@ def find_brute(T, P):
 		if k == m:
 			return i
 	return -1
+
+if __name__ == '__main__':
+	T = '0123456789'
+	P = '34'
+	print(T, P)
+	print(find_brute(T, P))
