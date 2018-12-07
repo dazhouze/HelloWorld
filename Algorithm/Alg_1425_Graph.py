@@ -77,7 +77,7 @@ class Graph(object):
 			result.update(secondary_map.values())
 		return result
 
-	def get_dege(self, u, v):
+	def get_edge(self, u, v):
 		'''Return the edge from u to v, or None if not adjacent.'''
 		return self._outgoing[u].get(v)
 
