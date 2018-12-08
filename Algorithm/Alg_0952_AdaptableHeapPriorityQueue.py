@@ -19,7 +19,7 @@ class AdaptableHeapPriorityQueue(HeapPriorityQueue):
 
 	def _bubble(self,j):
 		if j > 0 and self._data[j] < self._data[self._parent(j)]:
-			sefl._upheap(j)
+			self._upheap(j)
 		else:
 			self._downheap(j)
 
