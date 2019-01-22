@@ -14,22 +14,22 @@ class Perceptron(object):
 	'''Rerceptron classifier.
 	Parameters
 	----------
-	_eta: float
+	eta(η): float
 		Learing rate (between 0.0 and 1.0)
-	_n_iter: int
+	n_iter(epoch): int
 		Passes over the traing dataset.
 
 	Attributes
 	----------
 	_w : 1d-array
 		Weights after fitting.
-	_errors: list
+	errors: list
 		Number of misclassifiation in every epoch.
 	'''
 	def __init__(self, eta=0.01, n_iter=10, random_state=1):
-		self._eta = eta  # η learning rate
-		self._n_iter = n_iter  # epoch, nuber of passes over
-		self._random_state = random_state  # seed
+		self.eta = eta  # η learning rate
+		self.n_iter = n_iter  # epoch, nuber of passes over
+		self.random_state = random_state  # seed
 
 	def fit(self, X, y):
 		'''Fit training data.
@@ -45,18 +45,18 @@ class Perceptron(object):
 		-------
 		self: object
 		'''
-		rgen = np.random.RandomState(self._random_state)  # set seed
+		rgen = np.random.RandomState(self.random_state)  # set seed
 		self._w = rgen.normal(loc=0, scale=0.01, size=1+X.shape[1])  # wTx
-		self._errors = []  # log of errors
+		self.errors = []  # log of errors
 
-		for i in range(0, self._n_iter):
+		for i in range(0, self.n_iter):
 			errors = 0
 			for xi, target in zip(X, y):
-				update = self._eta * (target - self.predict(xi))
+				update = self.eta * (target - self.predict(xi))
 				self._w[1:] += update * xi  # ∆wj =η(y(i)−yˆ(i))x(i)
 				self._w[0] += update  # bias, -θ, ∆w0 =η(y(i) −output(i))
 				errors += int(update != 0.0)
-			self._errors.append(errors)
+			self.errors.append(errors)
 		return self
 
 	def net_input(self, X):
@@ -67,8 +67,8 @@ class Perceptron(object):
 		'''Return class label after unit step.'''
 		return np.where(self.net_input(X) >= 0.0, 1, -1)
 
-	def get_errors(self):
-		return self._errors
+	def errors(self):
+		return self.errors
 
 def plot_decision_regions(X, y, classifier, resolution=0.02):
 	from matplotlib.colors import ListedColormap
@@ -87,15 +87,21 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
 	plt.ylim(xx2.min(), xx2.max())
 	# plot class samples
 	for idx, cl in enumerate(np.unique(y)):
-		plt.scatter(x=X[y==cl, 0], y=X[y==cl, 1], alpha=0.8, c=cmap(idx), marker=markers[idx], label=cl)
+		plt.scatter(x=X[y==cl, 0], y=X[y==cl, 1],\
+				alpha=0.8, c=cmap(idx),\
+				marker=markers[idx], label=cl)
 
-if __name__ == '__main__':
-	# prepare data
-	df = pd.read_csv('./data/iris.data', header=None)
+def prepare_data(path):
+	df = pd.read_csv(path, header=None)
 	print(df.tail())
 	y = df.iloc[:100, 4].values  # first 100 rows' type
 	y = np.where(y == 'Iris-setosa', -1, 1)  # convert labels into two integer class labels 1, -1
 	X = df.iloc[:100, [0, 2]].values # training vectors, first 100 rows, 2 features
+	return X, y
+
+if __name__ == '__main__':
+	# prepare data
+	X, y = prepare_data('./data/iris.data')
 
 	base_name = os.path.basename(__file__)[:-3]
 	with matplotlib.backends.backend_pdf.PdfPages('%s.pdf' % base_name) as pdf_all:
@@ -108,11 +114,11 @@ if __name__ == '__main__':
 		plt.legend(loc='upper left')
 		pdf_all.savefig()
 		
-		# perceptron
-		fig = plt.figure()
+		# perceptron errors
 		ppn = Perceptron(eta=0.1, n_iter = 10)
 		ppn.fit(X, y)  # X is traing vectors, y is converted labels
-		plt.plot(range(1, len(ppn.get_errors()) + 1), ppn.get_errors(), marker='o', color='blue')
+		fig = plt.figure()
+		plt.plot(range(1, len(ppn.errors) + 1), ppn.errors, marker='o', color='blue')
 		plt.xlabel('Epoces')
 		plt.ylabel('Number of misclassifications')
 		pdf_all.savefig()
