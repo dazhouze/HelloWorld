@@ -40,4 +40,4 @@ if __name__ == '__main__':
 	result = {tail_v: None}
 	BFS(g, tail_v, result)
 	for v in result.items():
-		print(v.element())  # vertex
+		print(v[0].element())  # vertex
