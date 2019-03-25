@@ -14,3 +14,6 @@ Refere to book: [*Python Machine Learning*](https://github.com/rasbt/python-mach
 
 ## Deep learning
 Refere to book: [*Deep Learning with Python*](https://g.co/kgs/t2kRff)
+
+## Bayesian
+Refere to book: [*Bayesian Analysis with Python*](https://g.co/kgs/CtxD5u)
