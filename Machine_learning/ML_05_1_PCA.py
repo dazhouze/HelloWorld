@@ -5,37 +5,58 @@ import pandas as pd
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+
 import numpy as np
+import pandas as pd
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+'''
+PCA:
+1. Standardize the d-dimentisonal dataset.
+2. Construct the conariance matrix.
+3. Decompose covariance matrix into its eigenvectors and eigenvalues.
+4. Sort the eigenvalues by decreasing order to rank the corresponding eigenvectors.
+5. Select K eigenvectors which correspond to the K largest eigenvalues,
+	where k is the dimensionaltiy of the new features subspace (k<=d).
+6. Construct a projection matrix W from the "top" k eigenvectors.
+7. Transform the d-dimensional input dataset X using the projection matrix W
+	to obtain the new k-dimensional feature subspace.
+'''
 
 if __name__ == '__main__':
-	df_wine = pd.read_csv('./wine.data', header=None)
-	from sklearn.model_selection import train_test_split
-	X, y = df_wine.iloc[:, 1:].values, df_wine.iloc[:, 0].values
-	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)
 
-	# standardize the features
-	from sklearn.preprocessing import StandardScaler
-	sc = StandardScaler()
-	X_train_std = sc.fit_transform(X_train)
-	X_test_std = sc.transform(X_test)
+	base_name = os.path.basename(__file__)[:-3]
+	with matplotlib.backends.backend_pdf.PdfPages('%s.pdf' % base_name) as pdf_all:
 
-	# obtain the eigenpairs of covariance matrix
-	cov_mat = np.cov(X_train_std.T)
-	eigen_vals, eigen_vecs = np.linalg.eig(cov_mat)
-	#print('\nEigenvalues \n%s' % eigen_vals)
-	#print(eigen_vecs)
+		df_wine = pd.read_csv('./data/wine.data', header=None)
+		X, y = df_wine.iloc[:, 1:].values, df_wine.iloc[:, 0].values
+		X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)
+		
+		# standardize the features
+		sc = StandardScaler()
+		X_train_std = sc.fit_transform(X_train)
+		X_test_std = sc.transform(X_test)
+		
+		# obtain the eigenpairs of covariance matrix
+		cov_mat = np.cov(X_train_std.T)  # np.cov: covariance indication
+		eigen_vals, eigen_vecs = np.linalg.eig(cov_mat)  # eigenvectors of the covariance matrix represent the principal components
+		#print('\nEigenvalues \n%s' % eigen_vals)
+		#print(eigen_vecs)
+		
+		# variance explained ratios
+		tot = sum(eigen_vals)
+		var_exp = [(i/tot) for i in sorted(eigen_vals, reverse=True)]
+		cum_var_exp = np.cumsum(var_exp)
 
-	# variance explained ratios
-	tot = sum(eigen_vals)
-	var_exp = [(i/tot) for i in sorted(eigen_vals, reverse=True)]
-	cum_var_exp = np.cumsum(var_exp)
-	fig = plt.figure()
-	plt.bar(range(1, 14), var_exp, alpha=0.5, align='center', label='individual explained variance', color='blue')
-	plt.step(range(1, 14), cum_var_exp, where='mid', label='cumulative explained variance', color='blue')
-	plt.ylabel('Explained variance ratio')
-	plt.xlabel('Principal component index')
-	plt.legend(loc='best')
-	fig.savefig('variance_explained_ratios.pdf')
+		fig = plt.figure()
+		plt.bar(range(1, 14), var_exp, alpha=0.5, align='center', label='individual explained variance', color='blue')
+		plt.step(range(1, 14), cum_var_exp, where='mid', label='cumulative explained variance', color='blue')
+		plt.ylabel('Explained variance ratio')
+		plt.xlabel('Principal component index')
+		plt.legend(loc='best')
+		pdf_all.savefig(fig)
 
 	# make a list of (eigenvalue, eigenvector) tuples
 	eigen_pairs = [(np.abs(eigen_vals[i]), eigen_vecs[:, i]) for i in range(len(eigen_vals))]

@@ -31,7 +31,7 @@ class _DoublyLinkedBase(object):
 		'''Return True if the list is empty.'''
 		return self._size == 0
 
-	def __insert_between(self, e, predecessor, successor):
+	def _insert_between(self, e, predecessor, successor):
 		'''Add element e between two existing nodes and return new node.'''
 		newest = self._Node(e, predecessor, successor)
 		predecessor._next = newest
@@ -39,7 +39,7 @@ class _DoublyLinkedBase(object):
 		self._size += 1
 		return newest
 
-	def __delete_node(self, node):
+	def _delete_node(self, node):
 		'''Delete nonsentinel node from the list and returen its element.'''
 		predecessor = node._prev
 		successor = node._next

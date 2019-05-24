@@ -59,8 +59,8 @@ def regression():
 
 	# Normalize features
 	mean, std = train_data.mean(axis=0), train_data.std(axis=0)
-	train_data = (train_data - mean) / std
-	test_data = (test_data - mean) / std
+	train_data = (train_data - mean) / std  # scaled independently
+	test_data = (test_data - mean) / std  # scaled independently
 	print('Normalized training data No.1:\n', train_data[0])
 
 	# first model

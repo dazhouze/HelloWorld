@@ -69,7 +69,7 @@ class FavoritesList(object):
 		'''Remove element e frome the list of favorites.'''
 		p = self._find_position(e)
 		if p is not None:
-			self,_data.delete(p)
+			self._data.delete(p)
 
 	def top(self, k):
 		'''Generate sequence of topk elements in terms of access count.'''

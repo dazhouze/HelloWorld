@@ -23,8 +23,8 @@ if __name__ == '__main__':
 	print(df.values)  # pd data frame to np array
 
 	# Eliminating samples or features with missing values
-	print(df.dropna(axis=0))
-	print(df.dropna(axis=1))
+	print(df.dropna(axis=0))   # ->
+	print(df.dropna(axis=1))   # \|/
 
 	# replace the missing value with the mean
 	from sklearn.preprocessing import Imputer
